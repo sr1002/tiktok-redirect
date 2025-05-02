@@ -128,32 +128,52 @@
       border-radius: 0 0 12px 12px;
       font-size: 14px;
     }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 12px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      p, .countdown {
+        font-size: 16px;
+      }
+
+      .button {
+        font-size: 18px;
+        padding: 10px 20px;
+      }
+
+      .note {
+        font-size: 14px;
+      }
+
+      .live-preview::after {
+        font-size: 12px;
+      }
+    }
   </style>
-</head>
-<body>
-  <div class="autojump-bar" id="autojump">5 秒後自動進入直播間...</div>
-
-  <div class="container">
-    <h1>曜變盞講解・福利不停</h1>
-    <h2>建盞茶器實景展示直播</h2>
-    <p>今晚 6:00，邀您走進一場來自宋代薪火的器物之美<br/>
-    茶事 × 藏賞 × 禮遇｜一起進入曜變釉的深邃宇宙 🏺</p>
-
-    <div class="countdown" id="countdown">正在載入倒數時間...</div>
-
-    <div class="live-preview">
-      <img src="cfcfea2b-f7c1-4ece-a45f-2ea90a9e4a2a.png" alt="直播預覽">
-    </div>
-
-    <a class="button" href="https://vt.tiktok.com/ZSh8PENjQ/" target="_blank">立即前往 TikTok 直播間</a>
-    <p class="note">錯過今晚，就錯過一次入手曜變盞的好機會！</p>
-  </div>
 
   <script>
-    // 自動跳轉 5 秒
-    let autoCount = 5;
-    const autoJump = document.getElementById("autojump");
+    // 裝置偵測提示（建議用手機）
+    window.addEventListener("DOMContentLoaded", function () {
+      const isMobile = /iPhone|Android|iPad|Mobile/i.test(navigator.userAgent);
+      if (!isMobile) {
+        alert("建議使用手機瀏覽，獲得最佳觀看與跳轉體驗 📱");
+      }
+    });
+
+    // 自動跳轉 3 秒
+    let autoCount = 3;
     const jumpInterval = setInterval(() => {
+      const autoJump = document.getElementById("autojump");
       autoCount--;
       if (autoCount <= 0) {
         clearInterval(jumpInterval);
@@ -164,13 +184,11 @@
       }
     }, 1000);
 
-    // 晚上6點倒數邏輯
+    // 晚上6點倒數
     function updateCountdown() {
       const now = new Date();
       const liveTime = new Date();
-      liveTime.setHours(18, 0, 0, 0); // 18:00:00
-
-      // 若當天已過六點，設置為明天六點
+      liveTime.setHours(18, 0, 0, 0);
       if (now >= liveTime) {
         liveTime.setDate(liveTime.getDate() + 1);
       }
@@ -188,8 +206,29 @@
       }
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    window.addEventListener("DOMContentLoaded", () => {
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    });
   </script>
+</head>
+<body>
+  <div class="autojump-bar" id="autojump">3 秒後自動進入直播間...</div>
+
+  <div class="container">
+    <h1>曜變盞講解・福利不停</h1>
+    <h2>建盞茶器實景展示直播</h2>
+    <p>今晚 6:00，邀您走進一場來自宋代薪火的器物之美<br/>
+    茶事 × 藏賞 × 禮遇｜一起進入曜變釉的深邃宇宙 🏺</p>
+
+    <div class="countdown" id="countdown">正在載入倒數時間...</div>
+
+    <div class="live-preview">
+      <img src="cfcfea2b-f7c1-4ece-a45f-2ea90a9e4a2a.png" alt="直播預覽">
+    </div>
+
+    <a class="button" href="https://vt.tiktok.com/ZSh8PENjQ/" target="_blank">立即前往 TikTok 直播間</a>
+    <p class="note">錯過今晚，就錯過一次入手曜變盞的好機會！</p>
+  </div>
 </body>
 </html>
