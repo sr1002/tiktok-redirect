@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>曜變盞講解・福利不停</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", sans-serif;
+      color: #3a2e1e;
+      background-color: #fffaf0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 50px;
+      min-height: 100vh;
+    }
+
+    .autojump-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #c0392b;
+      color: white;
+      text-align: center;
+      font-size: 16px;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    .container {
+      background-color: white;
+      padding: 25px 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 625px;
+      width: 90%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .countdown {
+      font-size: 20px;
+      margin: 15px 0;
+      color: #c0392b;
+      font-weight: bold;
+      width: 100%;
+      text-align: center;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 15px auto;
+      padding: 12px 25px;
+      font-size: 20px;
+      background-color: #2f6632;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #244e27;
+    }
+
+    .note {
+      font-size: 16px;
+      color: #7b6f5d;
+      margin-top: 10px;
+    }
+
+    .live-preview {
+      margin: 18px 0;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      max-height: 250px;
+      width: 100%;
+    }
+
+    .live-preview img {
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transform: rotate(-90deg);
+      transform-origin: center;
+      object-fit: contain;
+    }
+
+    .live-preview::after {
+      content: "直播預覽畫面";
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 5px;
+      border-radius: 0 0 12px 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="autojump-bar" id="autojump">5 秒後自動進入直播間...</div>
+
+  <div class="container">
+    <h1>曜變盞講解・福利不停</h1>
+    <h2>建盞茶器實景展示直播</h2>
+    <p>今晚 6:00，邀您走進一場來自宋代薪火的器物之美<br/>
+    茶事 × 藏賞 × 禮遇｜一起進入曜變釉的深邃宇宙 🏺</p>
+
+    <div class="countdown" id="countdown">正在載入倒數時間...</div>
+
+    <div class="live-preview">
+      <img src="cfcfea2b-f7c1-4ece-a45f-2ea90a9e4a2a.png" alt="直播預覽">
+    </div>
+
+    <a class="button" href="https://vt.tiktok.com/ZSh8PENjQ/" target="_blank">立即前往 TikTok 直播間</a>
+    <p class="note">錯過今晚，就錯過一次入手曜變盞的好機會！</p>
+  </div>
+
+  <script>
+    // 自動跳轉 5 秒
+    let autoCount = 5;
+    const autoJump = document.getElementById("autojump");
+    const jumpInterval = setInterval(() => {
+      autoCount--;
+      if (autoCount <= 0) {
+        clearInterval(jumpInterval);
+        autoJump.textContent = "正在跳轉...";
+        window.location.href = "https://vt.tiktok.com/ZSh8PENjQ/";
+      } else {
+        autoJump.textContent = `${autoCount} 秒後自動進入直播間...`;
+      }
+    }, 1000);
+
+    // 晚上6點倒數邏輯
+    function updateCountdown() {
+      const now = new Date();
+      const liveTime = new Date();
+      liveTime.setHours(18, 0, 0, 0); // 18:00:00
+
+      // 若當天已過六點，設置為明天六點
+      if (now >= liveTime) {
+        liveTime.setDate(liveTime.getDate() + 1);
+      }
+
+      const diff = liveTime - now;
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      if (now.getHours() >= 18) {
+        document.getElementById("countdown").textContent = "直播已經開始，立即進入直播間！";
+      } else {
+        document.getElementById("countdown").textContent =
+          `距離開播還有 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
